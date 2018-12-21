@@ -47,6 +47,7 @@
                                     <outlet property="nameLabel" destination="fkA-yR-Vv2" id="exU-SD-9B8"/>
                                     <outlet property="photoImageView" destination="369-d9-pKi" id="tAx-VF-EgX"/>
                                     <outlet property="ratingControl" destination="9Bf-LS-xf5" id="paT-bi-Tek"/>
+                                    <segue destination="BYZ-38-t0r" kind="show" identifier="showDetail" id="0Hf-pe-vTo"/>
                                 </connections>
                             </tableViewCell>
                         </prototypes>
@@ -58,7 +59,7 @@
                     <navigationItem key="navigationItem" title="Your Meals" id="hDP-F9-TxQ">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="OAF-oN-Hli">
                             <connections>
-                                <segue destination="0qG-jq-YdE" kind="presentation" id="RNb-mx-g0Q"/>
+                                <segue destination="0qG-jq-YdE" kind="presentation" identifier="addItem" id="RNb-mx-g0Q"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -138,7 +139,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="3103" y="-588"/>
+            <point key="canvasLocation" x="3126" y="117"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2kV-6z-OWa">
@@ -174,10 +175,13 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yR4-xB-OS4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2172" y="-587"/>
+            <point key="canvasLocation" x="2094" y="553"/>
         </scene>
     </scenes>
     <resources>
         <image name="defaultPhoto" width="1080" height="1080"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="0Hf-pe-vTo"/>
+    </inferredMetricsTieBreakers>
 </document>
