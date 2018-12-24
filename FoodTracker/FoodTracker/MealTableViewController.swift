@@ -6,6 +6,11 @@
 //  Copyright © 2018 李浩. All rights reserved.
 //
 
+
+
+//可以参考这篇简书文章
+//https://www.jianshu.com/p/8d2d13793bc9
+
 import UIKit
 import os.log
 
@@ -26,7 +31,11 @@ class MealTableViewController: UITableViewController {
         
         navigationItem.leftBarButtonItem = editButtonItem
         
-        loadSampleMeals()
+        if let savedMeals = loadMeals() {
+            meals += savedMeals
+        } else {
+            loadSampleMeals()
+        }
     }
 
     // MARK: - Table view data source
@@ -72,6 +81,7 @@ class MealTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             meals.remove(at: indexPath.row)
+            savaMeals()
             // Delete the row from the data source
             tableView.deleteRows(at: [indexPath], with: .fade)
         } else if editingStyle == .insert {
@@ -145,6 +155,24 @@ class MealTableViewController: UITableViewController {
         meals += [meal1, meal2, meal3]
     }
     
+    private func savaMeals() {
+        let data = try! NSKeyedArchiver.archivedData(withRootObject: meals, requiringSecureCoding: false)
+        
+        do {
+            try data.write(to: Meal.ArchiveURL)
+        } catch  {
+            print("couldn't archive data: \(error.localizedDescription)")
+        }
+    }
+    
+    private func loadMeals() -> [Meal]? {
+        
+        guard let codeData = try? Data(contentsOf: Meal.ArchiveURL) else {
+            return nil
+        }
+        return try! NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(codeData) as? [Meal]
+    }
+    
     //MARK: - Actions
     @IBAction func unwindToMealList(sender: UIStoryboardSegue) {
         if let sourceViewController = sender.source as? MealViewController, let meal = sourceViewController.meal {
@@ -159,6 +187,8 @@ class MealTableViewController: UITableViewController {
                 meals.append(meal)
                 tableView.insertRows(at: [newIndexPath], with: .automatic)
             }
+            
+            savaMeals()
         }
     }
 
